@@ -1,0 +1,32 @@
+from pykeyboard import PyKeyboardEvent
+from pymouse import PyMouseEvent
+from threading import Thread
+from time import sleep
+
+
+class KeyListener(PyKeyboardEvent):
+    def __init__(self):
+        PyKeyboardEvent.__init__(self)
+
+    def handler(self, reply):
+        print("Handle keypress here...")
+
+
+class MouseListener(PyMouseEvent):
+    def __init__(self):
+        PyMouseEvent.__init__(self)
+
+    def click(self, x, y, button, press):
+        print("Handle mousepress here...")
+
+
+if __name__ == '__main__':
+    keylistener = KeyListener()
+    mouselistener = MouseListener()
+    kt = Thread(target=keylistener.run)
+    mt = Thread(target=mouselistener.run)
+    kt.start()
+    mt.start()
+    while True:
+        print("Running...")
+        sleep(10)
